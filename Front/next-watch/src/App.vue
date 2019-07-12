@@ -1,7 +1,27 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <v-app id="app">
+    <nav>
+      <v-toolbar>
+         <v-toolbar-title>Watch Next</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-text-field
+            class="mx-3"
+            flat
+            label="Search"
+            prepend-inner-icon="search"
+            solo-inverted
+          ></v-text-field>
+      <v-spacer></v-spacer>
+          <v-toolbar-items>
+          <v-btn flat>Login</v-btn>
+          <v-btn flat>Register</v-btn>
+          </v-toolbar-items>
+      </v-toolbar>
+    </nav>
+    <v-content>
+      <router-view/>
+    </v-content>   
+  </v-app>
 </template>
 
 <style>
@@ -11,6 +31,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
