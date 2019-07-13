@@ -41,7 +41,10 @@
                     alert("Please enter password.");
                     return;
                 }
-                Vue.axios.post("")
+                this.axios.post("http://localhost:8080/auth/login",{username: this.username,password: this.password})
+                    .then(response => {
+                        alert(response.data);
+                    });
             }
         }
     }
