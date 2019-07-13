@@ -1,4 +1,4 @@
-package com.beans;
+package com.NextWatch.beans;
 
 public class LoggingBean {
 	private String username;

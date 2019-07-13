@@ -1,14 +1,15 @@
-package com.models;
+package com.NextWatch.models;
 
 import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name="movie")
 public class Movie {
 	@Id
 	@GeneratedValue
@@ -23,12 +24,20 @@ public class Movie {
 	private Date released;
 	@Column(name = "runtime")
 	private int runtime; // in minutes
+	
+	@ElementCollection
 	@Column(name = "genre")
 	private Set<String> genre;
+	
+	@ElementCollection
 	@Column(name = "directors")
 	private Set<String> directors; // set in case there are more directors
+	
+	@ElementCollection
 	@Column(name = "writers")
 	private Set<String> writers;
+	
+	@ElementCollection
 	@Column(name = "actors")
 	private Set<String> actors;
 	@Column(name = "plot")

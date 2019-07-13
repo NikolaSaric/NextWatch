@@ -1,4 +1,4 @@
-package com.controllers;
+package com.NextWatch.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;

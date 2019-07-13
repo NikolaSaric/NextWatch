@@ -1,13 +1,12 @@
-package com.service;
+package com.NextWatch.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.models.Movie;
-import com.models.User;
-import com.repository.MovieRepository;
+import com.NextWatch.models.Movie;
+import com.NextWatch.repository.MovieRepository;
 
 @Service
 public class MovieService {

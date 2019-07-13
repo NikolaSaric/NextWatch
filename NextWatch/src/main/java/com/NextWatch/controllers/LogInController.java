@@ -1,4 +1,4 @@
-package com.controllers;
+package com.NextWatch.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.beans.LoggingBean;
+import com.NextWatch.beans.LoggingBean;
 
 @RestController
 @RequestMapping(value = "/auth")

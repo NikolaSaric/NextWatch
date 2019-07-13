@@ -1,4 +1,4 @@
-package com.models;
+package com.NextWatch.models;
 
 import java.util.Set;
 
@@ -6,8 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="User")
 public class User {
 	@Id
 	@GeneratedValue
@@ -17,9 +21,13 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
+	@OneToMany
 	private Set<Movie> likedMovies;
+	@OneToMany
 	private Set<Movie> dislikedMovies;
+	@OneToMany
 	private Set<Movie> watchedMovies;
+	@OneToMany
 	private Set<Movie> watchLaterMovies;
 
 	public User() {
