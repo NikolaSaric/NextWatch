@@ -1,4 +1,5 @@
-package jwt;
+/*
+package com.jwt;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -27,11 +28,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 	public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
+		System.out.println("Here 4");
 	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException, java.io.IOException {
+		System.out.println("Here 5");
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
 		if (authentication == null) {
 			filterChain.doFilter(request, response);
@@ -43,6 +46,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+		System.out.println("Here 6");
 		String token = request.getHeader(SecurityConstants.TOKEN_HEADER);
 		if (!StringUtils.isEmpty(token) && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 			try {
@@ -72,3 +76,4 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		return null;
 	}
 }
+*/
