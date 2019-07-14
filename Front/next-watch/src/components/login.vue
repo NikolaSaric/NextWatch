@@ -55,7 +55,7 @@
                     alert("Please enter password.");
                     return;
                 }
-                this.axios.post("http://localhost:8080/auth/login",{username: this.username,password: this.password})
+                this.axios.post("http://localhost:8080/authenticate",{username: this.username,password: this.password})
                     .then(response => {
                         alert(response.data);
                     });

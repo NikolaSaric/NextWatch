@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef6142e8-3252-42b6-b9d6-633a5893edec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next-watch/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/next-watch/src/components/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/components/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next-watch/src/components/register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/components/register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next-watch/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/router.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -43,8 +39,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/next-watch/src/components/login.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+            <state relative-caret-position="311">
+              <caret line="57" column="67" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
             </state>
           </provider>
         </entry>
@@ -181,12 +177,12 @@
       <updated>1562872288735</updated>
       <workItem from="1562872291722" duration="1074000" />
       <workItem from="1563006069317" duration="1582000" />
-      <workItem from="1563097018311" duration="4761000" />
+      <workItem from="1563097018311" duration="5001000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10460000" />
+    <option name="totallyTimeSpent" value="10700000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -259,8 +255,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/next-watch/src/components/login.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+        <state relative-caret-position="311">
+          <caret line="57" column="67" selection-start-line="57" selection-start-column="67" selection-end-line="57" selection-end-column="67" />
         </state>
       </provider>
     </entry>
