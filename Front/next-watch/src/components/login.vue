@@ -1,25 +1,39 @@
 <template>
-  <div>
-    <h1>Welcome to our LogIn page</h1>
-    <table>
+  <v-container grid-list-md text-xs-center>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <v-card>
+
+    <h1>Welcome to our Log In page</h1>
+          <br />
+    <table class="px-0 centered">
       <tr>
-        <td>Enter Username: </td>
-        <td><label>
-          <input type="text" v-model="username">
-        </label></td>
+        <td>
+          <v-text-field
+                  v-model="username"
+                  label="Username"
+                  required
+          ></v-text-field>
+        </td>
       </tr>
       <tr>
-        <td>Enter Password: </td>
-        <td><label>
-          <input type="text" v-model="password">
-        </label></td>
+        <td>
+          <v-text-field
+                  v-model="password"
+                  label="Password"
+                  :type="'password'"
+                  required
+          ></v-text-field>
+        </td>
       </tr>
       <tr>
-        <td></td>
-        <td><button v-on:click=""></button></td>
+        <td><v-btn large color="primary" v-on:click="login()">Log In</v-btn></td>
       </tr>
     </table>
-  </div>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>

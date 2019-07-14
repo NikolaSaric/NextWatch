@@ -40,7 +40,8 @@ public class LogInController {
 		}
 
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		if (foundUser.getPassword().equals(encoder.encode(lb.getPassword()))) {
+		
+		if (encoder.matches(lb.getPassword(), foundUser.getPassword())) {
 			// Implement JWT token for logged user.
 			return "Successfully logged in.";
 		}
@@ -57,7 +58,7 @@ public class LogInController {
 		}
 
 		if (rb.getPassword() == null || rb.getRepeatPassword() == null || rb.getPassword().equals("".trim())
-				|| rb.getPassword() != rb.getRepeatPassword()) {
+				|| !rb.getPassword().equals(rb.getRepeatPassword())) {
 			return "Please enter password.";
 		}
 
