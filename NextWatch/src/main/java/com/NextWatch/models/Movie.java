@@ -29,9 +29,8 @@ public class Movie {
 	@Column(name = "genre")
 	private Set<String> genre;
 	
-	@ElementCollection
-	@Column(name = "directors")
-	private Set<String> directors; // set in case there are more directors
+	@Column(name = "director")
+	private String director; // set in case there are more directors
 	
 	@ElementCollection
 	@Column(name = "writers")
@@ -57,17 +56,21 @@ public class Movie {
 		super();
 	}
 
-	public Movie(String title, int year, String rated, Date released, int runtime, Set<String> genre,
-			Set<String> directors, Set<String> writers, Set<String> actors, String plot, String language,
-			String country, String poster, double imdbRating, String production) {
+	
+	
+
+	public Movie(Long id, String title, int year, String rated, Date released, int runtime, Set<String> genre,
+			String director, Set<String> writers, Set<String> actors, String plot, String language, String country,
+			String poster, double imdbRating, String production) {
 		super();
+		this.id = id;
 		this.title = title;
 		this.year = year;
 		this.rated = rated;
 		this.released = released;
 		this.runtime = runtime;
 		this.genre = genre;
-		this.directors = directors;
+		this.director = director;
 		this.writers = writers;
 		this.actors = actors;
 		this.plot = plot;
@@ -77,7 +80,9 @@ public class Movie {
 		this.imdbRating = imdbRating;
 		this.production = production;
 	}
-	
+
+
+
 
 	public Long getId() {
 		return id;
@@ -135,12 +140,12 @@ public class Movie {
 		this.genre = genre;
 	}
 
-	public Set<String> getDirectors() {
-		return directors;
+	public String getDirectors() {
+		return director;
 	}
 
-	public void setDirectors(Set<String> directors) {
-		this.directors = directors;
+	public void setDirectors(String director) {
+		this.director = director;
 	}
 
 	public Set<String> getWriters() {
