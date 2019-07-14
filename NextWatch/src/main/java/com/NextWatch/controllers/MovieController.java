@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +30,18 @@ public class MovieController {
 	public Movie getFromAPI(String name) throws ParseException {
 		RestTemplate restTemplate = new RestTemplate();
 		String fooResourceUrl = "http://www.omdbapi.com/?t="+name +"&apikey=c83996a9&fbclid=IwAR2ociOGRH-djAzQbinOzdpv4kuYalT-RpMnLJRYS1aK2TqOyI_Mi_hHC1M";
-		ResponseEntity<MovieBean> response = restTemplate.getForEntity(fooResourceUrl + "/1", MovieBean.class);
-		MovieBean movieBean = response.getBody();
+		ResponseEntity<MovieBean> response;
+		MovieBean movieBean = new MovieBean();
+		try {
+			response= restTemplate.getForEntity(fooResourceUrl + "/1", MovieBean.class);
+			movieBean = response.getBody();
+		} catch (Exception e) {
+			return null; // If there is some error with api
+		}
 		String title = movieBean.Title;
+		if(title == null) {
+			return null; //If movie is not found
+		}
 		String[] actors = movieBean.Actors.split(", ");
 		HashSet<String> actorsSet = new HashSet<>();
 		for (String actor : actors) {
@@ -57,14 +66,24 @@ public class MovieController {
 			writersSet.add(write);
 		}
 		
-		Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre, writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Language, movieBean.Poster, movieBean.imdbRating, movieBean.Production);
-		return movieService.save(movie);
+		Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre, writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster, movieBean.imdbRating, movieBean.Production);
+		
+		List<Movie> moviesInDatabase =movieService.findByTitleAndReleased(title, released); // checks if there are already movies with same title and release date
+		if( moviesInDatabase.size()!=0) {
+			return movieService.findByTitleAndReleased(title, released).get(0);
+		}
+		else {
+			return movieService.save(movie);
+		}
+		
+		
+		
 	}
 	
 	@CrossOrigin
 	@RequestMapping(path="/api/call",method=RequestMethod.GET)
 	public void call() throws ParseException {
-		getFromAPI("Two towers");
+		getFromAPI("Lord of the rings");
 	}
 
 }

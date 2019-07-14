@@ -1,5 +1,6 @@
 package com.NextWatch.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class MovieService {
 
 	public void remove(Long id) {
 		repository.deleteById(id);
+	}
+	public List<Movie> findByTitleAndReleased(String title, Date released){
+		return repository.findByTitleAndReleased(title, released);
 	}
 
 }
