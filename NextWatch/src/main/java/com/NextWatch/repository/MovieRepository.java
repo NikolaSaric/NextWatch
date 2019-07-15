@@ -10,5 +10,6 @@ import com.NextWatch.models.Movie;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 	List<Movie> findByTitleAndReleased(String title, Date released);
+	List<Movie> findByTitle(String title);
 
 }
