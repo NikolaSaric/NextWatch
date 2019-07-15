@@ -13,8 +13,8 @@
           ></v-text-field>
       <v-spacer></v-spacer>
           <v-toolbar-items>
-          <v-btn flat>Login</v-btn>
-          <v-btn flat>Register</v-btn>
+          <v-btn flat @click="$router.push('LogIn')">Login</v-btn>
+          <v-btn flat @click="$router.push('Register')">Register</v-btn>
           </v-toolbar-items>
       </v-toolbar>
     </nav>
