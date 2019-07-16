@@ -27,6 +27,7 @@ public class MovieController {
 	@Autowired
 	MovieService movieService;
 
+	// If no movie was found in database, check API.
 	// Function receives name of the movie and calls API to get movie info
 	// Creates bean of type MovieBean and with that bean creates Movie object
 	// Saves movie object to database and returns saved object
@@ -73,21 +74,19 @@ public class MovieController {
 				writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster,
 				movieBean.imdbRating, movieBean.Production);
 
-		List<Movie> moviesInDatabase = movieService.findByTitleAndReleased(title, released); // checks if there are
-																								// already movies with
-																								// same title and
-																								// release date
-		if (moviesInDatabase.size() != 0) {
-			return movieService.findByTitleAndReleased(title, released).get(0);
-		} else {
+		// API returns different title from the one given, which implies another
+		// database check.
+		ArrayList<Movie> foundMovie = (ArrayList<Movie>) movieService.findByTitle(movie.getTitle());
+		if (foundMovie == null || foundMovie.isEmpty()) {
 			return movieService.save(movie);
 		}
+		return movie;
 
 	}
 
 	@CrossOrigin
 	@RequestMapping(path = "/api/searchMovies/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<Movie> searchMovies(@PathVariable("title") String title) {
+	public ArrayList<Movie> searchMovies(@PathVariable("title") String title) throws ParseException {
 		if (title.equals("".trim())) {
 			return null;
 		}
@@ -96,6 +95,13 @@ public class MovieController {
 
 		if (foundMovies == null || foundMovies.isEmpty()) {
 			// Search API.
+			Movie apiMovie = this.getFromAPI(title);
+
+			if (apiMovie == null) {
+				return null;
+			}
+
+			foundMovies.add(apiMovie);
 		}
 
 		return foundMovies;

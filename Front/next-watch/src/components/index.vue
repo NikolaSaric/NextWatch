@@ -82,7 +82,7 @@ import moviePreview from "./moviePreview.vue";
 export default {
   name: 'Index',
   components:{
-    moviePreview
-  }
+        moviePreview
+    }
 }
 </script>

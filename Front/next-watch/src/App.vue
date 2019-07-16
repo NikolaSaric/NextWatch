@@ -27,19 +27,18 @@
 </template>
 
 <script>
+    //import { dataBus } from './main';
+
     export default {
       data: function () {
           return {
               searchTitle: "",
-              foundMovies: []
           }
       },
         methods: {
           search: function () {
-              this.axios.get("http://localhost:8080/api/searchMovies/" + this.searchTitle)
-                  .then(response => {
-                      this.foundMovies = response.data;
-                  });
+              this.$router.push("/");
+              this.$router.push("/search/" + this.searchTitle);
           }
         }
     }
