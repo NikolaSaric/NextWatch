@@ -2,7 +2,7 @@
   <v-app id="app">
     <nav>
       <v-toolbar>
-         <v-toolbar-title>Watch Next</v-toolbar-title>
+         <v-toolbar-title>NextWatch </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-text-field
             class="mx-3"
