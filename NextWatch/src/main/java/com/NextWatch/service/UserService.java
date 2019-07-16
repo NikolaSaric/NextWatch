@@ -8,12 +8,11 @@ import org.springframework.stereotype.Service;
 import com.NextWatch.models.User;
 import com.NextWatch.repository.UserRepository;
 
-
 @Service
 public class UserService {
 	@Autowired
 	UserRepository repository;
-	
+
 	public User findOne(Long id) {
 		return repository.getOne(id);
 	}
@@ -30,6 +29,8 @@ public class UserService {
 		repository.deleteById(id);
 	}
 
-
+	public User findByUsername(String username) {
+		return repository.findByUsername(username);
+	}
 
 }

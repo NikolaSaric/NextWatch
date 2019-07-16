@@ -18,5 +18,15 @@ export default new Router({
       name: 'movie',
       component: () => import('./components/movie.vue')
   },
+  {
+      path: '/login',
+      name: 'LogIn',
+      component: () => import('./components/login.vue')
+  },
+  {
+      path: '/register',
+      name: 'Register',
+      component: () => import('./components/register.vue')
+  }
   ]
 })
