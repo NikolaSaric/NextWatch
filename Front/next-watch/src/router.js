@@ -12,6 +12,11 @@ export default new Router({
         path: '/',
         name: 'Index',
         component: () => import('./components/index.vue')
-    }
+    },
+    {
+      path: '/movie/:id',
+      name: 'movie',
+      component: () => import('./components/movie.vue')
+  },
   ]
 })
