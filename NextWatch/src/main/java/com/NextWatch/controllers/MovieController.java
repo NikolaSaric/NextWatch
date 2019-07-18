@@ -7,14 +7,23 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.MediaType;
+
+import org.springframework.core.io.WritableResource;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.NextWatch.beans.MovieBean;
@@ -111,6 +120,50 @@ public class MovieController {
 	@RequestMapping(path = "/api/call", method = RequestMethod.GET)
 	public void call() throws ParseException {
 		getFromAPI("Lord of the rings");
+	}
+	
+	@CrossOrigin
+	@RequestMapping(path="/api/movie/{id}", method=RequestMethod.GET)
+	//Returns Movie bean with given ID
+	public @ResponseBody MovieBean getMovie(@PathVariable("id") Long id){
+		Movie movie = movieService.findOne(id);
+		MovieBean mb = new MovieBean();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
+		mb.Country = movie.getCountry();
+		for (String actor : movie.getActors()) {
+			if(mb.Actors==null) {
+				mb.Actors = "" + actor;
+			}
+			else {
+				mb.Actors= mb.Actors + ", " +actor;
+			}
+		}
+		mb.Director = movie.getDirectors();
+		for (String genre : movie.getGenre()) {
+			if(mb.Genre==null) {
+				mb.Genre = ""+genre;
+			}else {
+				mb.Genre = mb.Genre+", "+genre;
+			}
+		}
+		mb.imdbRating = movie.getImdbRating();
+		mb.Language = movie.getLanguage();
+		mb.Plot = movie.getPlot();
+		mb.Poster = movie.getPoster();
+		mb.Production = movie.getProduction();
+		mb.Rated = movie.getRated();
+		mb.Released = sdf.format(movie.getReleased());
+		mb.Runtime = movie.getRuntime() + " min";
+		mb.Title = movie.getTitle();
+		for (String writer : movie.getWriters()) {
+			if(mb.Writer==null) {
+				mb.Writer=""+writer;
+			}else {
+				mb.Writer=mb.Writer+", " + writer;
+			}
+		}
+		mb.Year = movie.getYear();
+		return mb;
 	}
 
 }

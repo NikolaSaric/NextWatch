@@ -9,20 +9,25 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-          path: '/',
-          name: 'Index',
-          component: () => import('./components/index.vue')
-      },
-      {
-          path: '/login',
-          name: 'LogIn',
-          component: () => import('./components/login.vue')
-      },
-      {
-          path: '/register',
-          name: 'Register',
-          component: () => import('./components/register.vue')
-      },
+        path: '/',
+        name: 'Index',
+        component: () => import('./components/index.vue')
+    },
+    {
+      path: '/movie/:id',
+      name: 'movie',
+      component: () => import('./components/movie.vue')
+  },
+  {
+      path: '/login',
+      name: 'LogIn',
+      component: () => import('./components/login.vue')
+  },
+  {
+      path: '/register',
+      name: 'Register',
+      component: () => import('./components/register.vue')
+  },
       {
           path: '/search/:searchTitle',
           name: 'Search',
