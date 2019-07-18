@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.NextWatch.models.Movie;
@@ -36,6 +37,12 @@ public class MovieService {
 
 	public List<Movie> findByTitle(String title) {
 		return repository.findByTitle(title);
+	}
+	public List<Movie> findTop20ByOrderByReleasedDesc(){
+		return repository.findTop20ByOrderByReleasedDesc();
+	}
+	public List<Movie> findTop20ByOrderBynumberLikesDesc(){
+		return repository.findTop20ByOrderByNumberLikesDesc();
 	}
 
 }

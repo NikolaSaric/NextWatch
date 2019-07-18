@@ -10,7 +10,7 @@ import java.util.List;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.http.MediaType;
 
 import org.springframework.core.io.WritableResource;
@@ -69,7 +69,12 @@ public class MovieController {
 		}
 		String rated = movieBean.Rated;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
-		Date released = sdf.parse(movieBean.Released);
+		Date released = null;
+		try {
+			released = sdf.parse(movieBean.Released);
+		}
+		catch (Exception e) {
+		}
 		String[] runtimeArray = movieBean.Runtime.split(" ");
 		int runtime = Integer.parseInt(runtimeArray[0]);
 
@@ -152,7 +157,11 @@ public class MovieController {
 		mb.Poster = movie.getPoster();
 		mb.Production = movie.getProduction();
 		mb.Rated = movie.getRated();
-		mb.Released = sdf.format(movie.getReleased());
+		try {
+			mb.Released = sdf.format(movie.getReleased());
+		} catch (Exception e) {
+			mb.Released = "Unknown";
+		}
 		mb.Runtime = movie.getRuntime() + " min";
 		mb.Title = movie.getTitle();
 		for (String writer : movie.getWriters()) {
@@ -164,6 +173,28 @@ public class MovieController {
 		}
 		mb.Year = movie.getYear();
 		return mb;
+	}
+	
+	@CrossOrigin
+	@RequestMapping(path="/api/getNewest", method=RequestMethod.GET)
+	public @ResponseBody ArrayList<MovieBean> getNewest(){
+		ArrayList<Movie> movies =(ArrayList<Movie>) movieService.findTop20ByOrderByReleasedDesc();
+		ArrayList<MovieBean> mbeans = new ArrayList<>();
+		for (Movie movie : movies) {
+			mbeans.add(new MovieBean(movie));
+		}
+		return mbeans;
+	}
+	
+	@CrossOrigin
+	@RequestMapping(path="/api/getPopular", method=RequestMethod.GET)
+	public @ResponseBody ArrayList<MovieBean> getPopular(){
+		ArrayList<Movie> movies =(ArrayList<Movie>) movieService.findTop20ByOrderBynumberLikesDesc();
+		ArrayList<MovieBean> mbeans = new ArrayList<>();
+		for (Movie movie : movies) {
+			mbeans.add(new MovieBean(movie));
+		}
+		return mbeans;
 	}
 
 }
