@@ -16,27 +16,17 @@
 
     <v-layout align-start row justify-start class="UpperLowerMargin5">
         <span class="smallMarginRight font-weight-medium title">Popular</span>
+        <v-btn @click="popPrevious"><v-icon>arrow_left</v-icon></v-btn>
+        <v-btn @click="popNext"><v-icon>arrow_right</v-icon></v-btn>
         <v-btn >More</v-btn>
     </v-layout>
 
 
 
     <v-layout row>
-      <v-flex xs6 order-lg2>
-        <moviePreview rating=5 filePath="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300" movieName="The Lord of the Rings: The Fellowship of the Ring" ></moviePreview>
-      </v-flex>
-      <v-flex xs6 order-lg2>
-        <moviePreview rating=5 filePath="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300" movieName="The Lord of the Rings: The Fellowship of the Ring" ></moviePreview>
-      </v-flex>
-      <v-flex xs6 order-lg2>
-        <moviePreview rating=5 filePath="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300" movieName="The Lord of the Rings: The Fellowship of the Ring" ></moviePreview>
-      </v-flex>
-      <v-flex xs6 order-lg2>
-        <moviePreview rating=5 filePath="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300" movieName="The Lord of the Rings: The Fellowship of the Ring" ></moviePreview>
-      </v-flex>
-      <v-flex xs6 order-lg2>
-        <moviePreview rating=5 filePath="https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX300" movieName="The Lord of the Rings: The Fellowship of the Ring" ></moviePreview>
-      </v-flex>
+      <v-flex xs6 order-lg2 v-for="popMovie in popularShow" :key="popMovie.id">
+          <moviePreview :rating=popMovie.imdbRating :filePath=popMovie.Poster :movieName=popMovie.Title ></moviePreview>
+        </v-flex>
     </v-layout>
 
     <v-layout align-start row justify-start class="UpperLowerMargin5">
@@ -67,7 +57,10 @@ export default {
     return {
       newest:[],
       newestPageNum : 1,
-      newestShow:[]
+      newestShow:[],
+      popular:[],
+      popularPageNum : 1,
+      popularShow:[]
     }
   },
   methods:{
@@ -108,6 +101,43 @@ export default {
       }
       this.newestShow=list;
 
+    },
+    popPrevious(){
+      this.popularPageNum--;
+      if(this.popularPageNum==0){
+        this.popularPageNum=4;
+      }
+      if(this.popular[(this.popularPageNum-1)*5] == undefined){
+        this.popularPageNum++;
+      }
+      var list=[];
+      for(var i=0;i<5;i++){
+        if(this.popular[(this.popularPageNum-1)*5+i] == undefined){
+          break;
+        }
+        list.push(this.popular[(this.popularPageNum-1)*5+i]);
+      }
+      this.popularShow=list;
+
+
+    },
+    popNext(){
+      this.popularPageNum++;
+      if(this.popularPageNum==5){
+        this.popularPageNum=1;
+      }
+      if(this.popular[(this.popularPageNum-1)*5] == undefined){
+        this.popularPageNum--;
+      }
+      var list=[];
+      for(var i=0;i<5;i++){
+        if(this.popular[(this.popularPageNum-1)*5+i] == undefined){
+          break;
+        }
+        list.push(this.popular[(this.popularPageNum-1)*5+i]);
+      }
+      this.popularShow=list;
+
     }
   },
   mounted(){
@@ -119,7 +149,16 @@ export default {
         }
         this.newestShow.push(this.newest[i]);
       }
-    })
+    });
+    this.axios.get("http://localhost:8080/api/getPopular").then(response=>{
+      this.popular = response.data;
+      for(var i = 0;i<5;i++){
+        if(this.popular[i] == undefined){
+          break;
+        }
+        this.popularShow.push(this.popular[i]);
+      }
+    });
   }
 }
 </script>

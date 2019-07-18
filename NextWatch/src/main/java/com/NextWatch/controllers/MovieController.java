@@ -185,5 +185,16 @@ public class MovieController {
 		}
 		return mbeans;
 	}
+	
+	@CrossOrigin
+	@RequestMapping(path="/api/getPopular", method=RequestMethod.GET)
+	public @ResponseBody ArrayList<MovieBean> getPopular(){
+		ArrayList<Movie> movies =(ArrayList<Movie>) movieService.findTop20ByOrderBynumberLikesDesc();
+		ArrayList<MovieBean> mbeans = new ArrayList<>();
+		for (Movie movie : movies) {
+			mbeans.add(new MovieBean(movie));
+		}
+		return mbeans;
+	}
 
 }

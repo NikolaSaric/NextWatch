@@ -14,5 +14,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 	List<Movie> findByTitle(String title);
 	
 	List<Movie> findTop20ByOrderByReleasedDesc();
+	List<Movie> findTop20ByOrderByNumberLikesDesc();
 	
 }

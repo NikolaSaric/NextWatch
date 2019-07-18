@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,13 +24,13 @@ public class User {
 	@Column(name = "email")
 	private String email;
 
-	@OneToMany
+	@ManyToMany
 	private Set<Movie> likedMovies;
-	@OneToMany
+	@ManyToMany
 	private Set<Movie> dislikedMovies;
-	@OneToMany
+	@ManyToMany
 	private Set<Movie> watchedMovies;
-	@OneToMany
+	@ManyToMany
 	private Set<Movie> watchLaterMovies;
 
 	public User() {

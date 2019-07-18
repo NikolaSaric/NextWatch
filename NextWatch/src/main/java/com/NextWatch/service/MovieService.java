@@ -41,5 +41,8 @@ public class MovieService {
 	public List<Movie> findTop20ByOrderByReleasedDesc(){
 		return repository.findTop20ByOrderByReleasedDesc();
 	}
+	public List<Movie> findTop20ByOrderBynumberLikesDesc(){
+		return repository.findTop20ByOrderByNumberLikesDesc();
+	}
 
 }

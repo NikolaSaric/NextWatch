@@ -8,6 +8,9 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name="movie")
 public class Movie {
@@ -51,6 +54,15 @@ public class Movie {
 	private double imdbRating;
 	@Column(name = "production")
 	private String production;
+	@Column(name = "NumberOfLikes")
+	private int numberLikes;
+	@Column(name = "NumberOfDislikes")
+	private int numberDislikes;
+	@ManyToMany(mappedBy="likedMovies")
+	private Set<User> usersWhoLiked;
+	
+	@ManyToMany(mappedBy="dislikedMovies")
+	private Set<User> usersWhoDisliked;
 
 	public Movie() {
 		super();
@@ -211,5 +223,76 @@ public class Movie {
 	public void setProduction(String production) {
 		this.production = production;
 	}
+
+
+
+
+	public String getDirector() {
+		return director;
+	}
+
+
+
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+
+
+
+	public int getNumberLikes() {
+		return numberLikes;
+	}
+
+
+
+
+	public void setNumberLikes(int numberLikes) {
+		this.numberLikes = numberLikes;
+	}
+
+
+
+
+	public int getNumberDislikes() {
+		return numberDislikes;
+	}
+
+
+
+
+	public void setNumberDislikes(int numberDislikes) {
+		this.numberDislikes = numberDislikes;
+	}
+
+
+
+
+	public Set<User> getUsersWhoLiked() {
+		return usersWhoLiked;
+	}
+
+
+
+
+	public void setUsersWhoLiked(Set<User> usersWhoLiked) {
+		this.usersWhoLiked = usersWhoLiked;
+	}
+
+
+
+
+	public Set<User> getUsersWhoDisliked() {
+		return usersWhoDisliked;
+	}
+
+
+
+
+	public void setUsersWhoDisliked(Set<User> usersWhoDisliked) {
+		this.usersWhoDisliked = usersWhoDisliked;
+	}
+	
 
 }
