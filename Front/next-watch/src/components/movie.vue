@@ -70,13 +70,11 @@ export default {
             Genre:"",
             Language:"",
             Country:"",
-            Production:""
         }
     },
     mounted(){
         var url = window.location.pathname;
-        this.axios.get("http://localhost:8080/api/"+url).then(response=>{
-            console.log(response);
+        this.axios.get("http://localhost:8080/api"+url).then(response=>{
             this.Poster=response.data.Poster;
             this.imdbRating = response.data.imdbRating;
             this.Title = response.data.Title;
@@ -92,6 +90,11 @@ export default {
             this.Language = response.data.Language;
             this.Country = response.data.Country;
         });
+        if(localStorage.getItem("jwt") == null) {
+            alert("No user logged in.");
+        } else {
+            alert("Logged in!");
+        }
     }
     
 }

@@ -40,7 +40,7 @@ public class MovieController {
 	// Function receives name of the movie and calls API to get movie info
 	// Creates bean of type MovieBean and with that bean creates Movie object
 	// Saves movie object to database and returns saved object
-	public Movie getFromAPI(String name) throws ParseException {
+	public ArrayList<Movie> getFromAPI(String name) throws ParseException {
 		RestTemplate restTemplate = new RestTemplate();
 		String fooResourceUrl = "http://www.omdbapi.com/?t=" + name
 				+ "&apikey=c83996a9&fbclid=IwAR2ociOGRH-djAzQbinOzdpv4kuYalT-RpMnLJRYS1aK2TqOyI_Mi_hHC1M";
@@ -79,17 +79,18 @@ public class MovieController {
 			writersSet.add(write);
 		}
 
-		Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre,
-				writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster,
-				movieBean.imdbRating, movieBean.Production);
-
 		// API returns different title from the one given, which implies another
 		// database check.
-		ArrayList<Movie> foundMovie = (ArrayList<Movie>) movieService.findByTitle(movie.getTitle());
+		ArrayList<Movie> foundMovie = (ArrayList<Movie>) movieService.findByTitle(title);
 		if (foundMovie == null || foundMovie.isEmpty()) {
-			return movieService.save(movie);
+			Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre,
+					writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster,
+					movieBean.imdbRating, movieBean.Production);
+			ArrayList<Movie> newMovie = new ArrayList<Movie>();
+			newMovie.add(movieService.save(movie));
+			return newMovie;
 		}
-		return movie;
+		return foundMovie;
 
 	}
 
@@ -104,13 +105,13 @@ public class MovieController {
 
 		if (foundMovies == null || foundMovies.isEmpty()) {
 			// Search API.
-			Movie apiMovie = this.getFromAPI(title);
+			ArrayList<Movie> apiMovie = this.getFromAPI(title);
 
 			if (apiMovie == null) {
 				return null;
 			}
 
-			foundMovies.add(apiMovie);
+			return apiMovie;
 		}
 
 		return foundMovies;
@@ -121,29 +122,28 @@ public class MovieController {
 	public void call() throws ParseException {
 		getFromAPI("Lord of the rings");
 	}
-	
+
 	@CrossOrigin
-	@RequestMapping(path="/api/movie/{id}", method=RequestMethod.GET)
-	//Returns Movie bean with given ID
-	public @ResponseBody MovieBean getMovie(@PathVariable("id") Long id){
+	@RequestMapping(path = "/api/movie/{id}", method = RequestMethod.GET)
+	// Returns Movie bean with given ID
+	public @ResponseBody MovieBean getMovie(@PathVariable("id") Long id) {
 		Movie movie = movieService.findOne(id);
 		MovieBean mb = new MovieBean();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
 		mb.Country = movie.getCountry();
 		for (String actor : movie.getActors()) {
-			if(mb.Actors==null) {
+			if (mb.Actors == null) {
 				mb.Actors = "" + actor;
-			}
-			else {
-				mb.Actors= mb.Actors + ", " +actor;
+			} else {
+				mb.Actors = mb.Actors + ", " + actor;
 			}
 		}
 		mb.Director = movie.getDirectors();
 		for (String genre : movie.getGenre()) {
-			if(mb.Genre==null) {
-				mb.Genre = ""+genre;
-			}else {
-				mb.Genre = mb.Genre+", "+genre;
+			if (mb.Genre == null) {
+				mb.Genre = "" + genre;
+			} else {
+				mb.Genre = mb.Genre + ", " + genre;
 			}
 		}
 		mb.imdbRating = movie.getImdbRating();
@@ -156,10 +156,10 @@ public class MovieController {
 		mb.Runtime = movie.getRuntime() + " min";
 		mb.Title = movie.getTitle();
 		for (String writer : movie.getWriters()) {
-			if(mb.Writer==null) {
-				mb.Writer=""+writer;
-			}else {
-				mb.Writer=mb.Writer+", " + writer;
+			if (mb.Writer == null) {
+				mb.Writer = "" + writer;
+			} else {
+				mb.Writer = mb.Writer + ", " + writer;
 			}
 		}
 		mb.Year = movie.getYear();
