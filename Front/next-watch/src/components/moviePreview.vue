@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-img class="centered" :src="filePath"  width=200 height=300 ></v-img>
-    <v-rating  class="centered" v-model="rating"></v-rating>
+    <img class="centered" :src="filePath"  width=200 height=300 />
+    <v-rating length=10 small  class="centered" v-model="rating"></v-rating>
     <h2 class="centered">{{movieName}}</h2>
   </div>
 </template>

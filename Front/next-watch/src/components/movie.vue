@@ -75,7 +75,7 @@ export default {
     },
     mounted(){
         var url = window.location.pathname;
-        this.axios.get("http://localhost:8080/api/"+url).then(response=>{
+        this.axios.get("http://localhost:8080/api"+url).then(response=>{
             console.log(response);
             this.Poster=response.data.Poster;
             this.imdbRating = response.data.imdbRating;
