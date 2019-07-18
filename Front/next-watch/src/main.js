@@ -9,6 +9,8 @@ import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
 
+//export const dataBus = new Vue();
+
 Vue.use(VueAxios, axios)
 Vue.use(Vuetify)
 new Vue({

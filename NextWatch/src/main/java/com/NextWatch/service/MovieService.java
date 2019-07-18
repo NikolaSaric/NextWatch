@@ -13,7 +13,7 @@ import com.NextWatch.repository.MovieRepository;
 public class MovieService {
 	@Autowired
 	MovieRepository repository;
-	
+
 	public Movie findOne(Long id) {
 		return repository.getOne(id);
 	}
@@ -29,8 +29,13 @@ public class MovieService {
 	public void remove(Long id) {
 		repository.deleteById(id);
 	}
-	public List<Movie> findByTitleAndReleased(String title, Date released){
+
+	public List<Movie> findByTitleAndReleased(String title, Date released) {
 		return repository.findByTitleAndReleased(title, released);
+	}
+
+	public List<Movie> findByTitle(String title) {
+		return repository.findByTitle(title);
 	}
 
 }

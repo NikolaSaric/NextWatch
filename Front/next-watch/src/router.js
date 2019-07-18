@@ -27,6 +27,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: () => import('./components/register.vue')
-  }
+  },
+      {
+          path: '/search/:searchTitle',
+          name: 'Search',
+          component: () => import('./components/searchResults.vue')
+      }
   ]
 })
