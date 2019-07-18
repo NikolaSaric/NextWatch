@@ -57,8 +57,10 @@
                 }
                 this.axios.post("http://localhost:8080/authenticate",{username: this.username,password: this.password})
                     .then(response => {
-                        alert(response.data);
+                        localStorage.setItem("jwt",response.data.token);
                     });
+                alert("Successfully logged in.");
+                window.location="/";
             }
         }
     }

@@ -22,6 +22,7 @@ public class LogInController {
 	@Autowired
 	UserService userService;
 
+	// Old function, application uses /authenticate for logging.
 	@CrossOrigin()
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String login(@RequestBody LoggingBean lb) {

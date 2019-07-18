@@ -6,7 +6,7 @@
 
     <v-layout row v-for="movie in foundMovies" :key="movie.id">
       <v-flex xs6 order-lg2>
-        <moviePreview :rating="movie.rating" :filePath="movie.poster" :movieName="movie.title" ></moviePreview>
+        <moviePreview :rating="movie.rating" :filePath="movie.poster" :movieName="movie.title" :id="movie.id"></moviePreview>
       </v-flex>
     </v-layout>
   </v-container>
