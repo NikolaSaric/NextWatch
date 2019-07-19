@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img class="centered" :src="filePath"  width=200 height=300 />
-    <v-rating length=10 small  class="centered" v-model="rating" @click="$router.push('/movie/'+ id)"></v-rating>
+    <img class="centered" :src="filePath"  width=200 height=300 @click="$router.push('/movie/'+ id)"/>
+    <v-rating length=10 small  class="centered" v-model="rating" ></v-rating>
     <h2 class="centered">{{movieName}}</h2>
   </div>
 </template>

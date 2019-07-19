@@ -41,7 +41,7 @@
           }
       },
         mounted(){
-          this.loggedIn = localStorage.getItem("jwt") != null;
+          this.loggedIn = localStorage.getItem("jwt") !== "";
         },
         methods: {
             search: function () {
@@ -49,10 +49,10 @@
                 this.$router.push("/search/" + this.searchTitle);
             },
             logout: function () {
-                localStorage.setItem("jwt", null);
+                localStorage.setItem("jwt", "");
                 this.loggedIn = false;
                 this.$router.push("/");
-                //window.location="/";
+                window.location.reload();
             }
         }
     }

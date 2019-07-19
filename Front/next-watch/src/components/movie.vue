@@ -5,7 +5,7 @@
                 <v-flex xs4 class="moviedesc" ma-2> 
                         <v-card height=480>
                             <br>
-                            <img class="centered " :src="Poster"  width=260 height=390 />
+                            <img class="centered " :src="Poster" width=260 height=390 />
                             <v-rating small half-increments length=10 readonly  class="centered" v-model="imdbRating"></v-rating>
                         </v-card> 
                 </v-flex>
@@ -73,6 +73,7 @@ export default {
         }
     },
     mounted(){
+
         var url = window.location.pathname;
         this.axios.get("http://localhost:8080/api"+url).then(response=>{
             this.Poster=response.data.Poster;
@@ -90,11 +91,6 @@ export default {
             this.Language = response.data.Language;
             this.Country = response.data.Country;
         });
-        if(localStorage.getItem("jwt") == null) {
-            alert("No user logged in.");
-        } else {
-            alert("Logged in!");
-        }
     }
     
 }
