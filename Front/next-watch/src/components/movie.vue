@@ -10,7 +10,7 @@
                         </v-card> 
                 </v-flex>
                 <v-flex xs4  ma-2>
-                    <v-card height=480 >
+                    <v-card >
                         <v-card-text class="text-xs-left">
                             <h2 class="text-xs-center">{{Title}} ({{Year}})</h2>
                             <p>Genre: {{Genre}}</p>

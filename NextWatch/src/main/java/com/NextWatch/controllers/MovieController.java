@@ -101,13 +101,13 @@ public class MovieController {
 
 	@CrossOrigin
 	@RequestMapping(path = "/api/searchMovies/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ArrayList<Movie> searchMovies(@PathVariable("title") String title) throws ParseException {
+	public ArrayList<MovieBean> searchMovies(@PathVariable("title") String title) throws ParseException {
 		if (title.equals("".trim())) {
 			return null;
 		}
 
 		ArrayList<Movie> foundMovies = (ArrayList<Movie>) movieService.findByTitle(title);
-
+		ArrayList<MovieBean> foundMovieBeans = new ArrayList<>();
 		if (foundMovies == null || foundMovies.isEmpty()) {
 			// Search API.
 			ArrayList<Movie> apiMovie = this.getFromAPI(title);
@@ -115,11 +115,13 @@ public class MovieController {
 			if (apiMovie == null) {
 				return null;
 			}
+			for (Movie movie : apiMovie) {
+				foundMovieBeans.add(new MovieBean(movie));
 
-			return apiMovie;
+			}
 		}
 
-		return foundMovies;
+		return foundMovieBeans;
 	}
 
 	@CrossOrigin
@@ -133,45 +135,7 @@ public class MovieController {
 	// Returns Movie bean with given ID
 	public @ResponseBody MovieBean getMovie(@PathVariable("id") Long id) {
 		Movie movie = movieService.findOne(id);
-		MovieBean mb = new MovieBean();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
-		mb.Country = movie.getCountry();
-		for (String actor : movie.getActors()) {
-			if (mb.Actors == null) {
-				mb.Actors = "" + actor;
-			} else {
-				mb.Actors = mb.Actors + ", " + actor;
-			}
-		}
-		mb.Director = movie.getDirectors();
-		for (String genre : movie.getGenre()) {
-			if (mb.Genre == null) {
-				mb.Genre = "" + genre;
-			} else {
-				mb.Genre = mb.Genre + ", " + genre;
-			}
-		}
-		mb.imdbRating = movie.getImdbRating();
-		mb.Language = movie.getLanguage();
-		mb.Plot = movie.getPlot();
-		mb.Poster = movie.getPoster();
-		mb.Production = movie.getProduction();
-		mb.Rated = movie.getRated();
-		try {
-			mb.Released = sdf.format(movie.getReleased());
-		} catch (Exception e) {
-			mb.Released = "Unknown";
-		}
-		mb.Runtime = movie.getRuntime() + " min";
-		mb.Title = movie.getTitle();
-		for (String writer : movie.getWriters()) {
-			if (mb.Writer == null) {
-				mb.Writer = "" + writer;
-			} else {
-				mb.Writer = mb.Writer + ", " + writer;
-			}
-		}
-		mb.Year = movie.getYear();
+		MovieBean mb = new MovieBean(movie);
 		return mb;
 	}
 	

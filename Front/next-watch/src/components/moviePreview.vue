@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <img class="centered" :src="filePath"  width=200 height=300 @click="$router.push('/movie/'+ id)"/>
