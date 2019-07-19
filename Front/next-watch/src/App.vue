@@ -14,11 +14,11 @@
             @keyup.enter="search()"
           ></v-text-field>
       <v-spacer></v-spacer>
-          <v-toolbar-items v-if="loggedIn=== false">
+          <v-toolbar-items v-if="!loggedIn">
           <v-btn flat @click="$router.push('/login')">Login</v-btn>
           <v-btn flat @click="$router.push('/register')">Register</v-btn>
           </v-toolbar-items>
-        <v-toolbar-items v-if="loggedIn === true">
+        <v-toolbar-items v-if="loggedIn">
           <v-btn flat >Profile</v-btn>
           <v-btn flat @click="logout()">Log Out</v-btn>
         </v-toolbar-items>
@@ -51,13 +51,8 @@
             logout: function () {
                 localStorage.setItem("jwt", null);
                 this.loggedIn = false;
-
-            }
-        },
-        watch: {
-            "localStorage.getItem('jwt')" () {
-                // react to logged user change.
-                return localStorage.getItem("jwt") != null;
+                this.$router.push("/");
+                //window.location="/";
             }
         }
     }

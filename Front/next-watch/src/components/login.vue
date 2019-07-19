@@ -60,7 +60,8 @@
                         localStorage.setItem("jwt",response.data.token);
                     });
                 alert("Successfully logged in.");
-                window.location="/";
+                this.$router.push("/");
+                window.location.reload();
             }
         }
     }

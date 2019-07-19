@@ -60,7 +60,8 @@ export default {
       newestShow:[],
       popular:[],
       popularPageNum : 1,
-      popularShow:[]
+      popularShow:[],
+        li: false
     }
   },
   methods:{
@@ -91,7 +92,6 @@ export default {
       if(this.newest[(this.newestPageNum-1)*5] == undefined){
         this.newestPageNum--;
       }
-      console.log(this.newestShow);
       var list=[];
       for(var i=0;i<5;i++){
         if(this.newest[(this.newestPageNum-1)*5+i] == undefined){
@@ -141,6 +141,7 @@ export default {
     }
   },
   mounted(){
+     // this.li = localStorage.getItem("jwt") != null;
     this.axios.get("http://localhost:8080/api/getNewest").then(response=>{
       this.newest = response.data;
       for(var i = 0;i<5;i++){
