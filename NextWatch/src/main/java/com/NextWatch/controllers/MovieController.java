@@ -40,7 +40,7 @@ public class MovieController {
 	// Function receives name of the movie and calls API to get movie info
 	// Creates bean of type MovieBean and with that bean creates Movie object
 	// Saves movie object to database and returns saved object
-	public Movie getFromAPI(String name) throws ParseException {
+	public ArrayList<Movie> getFromAPI(String name) throws ParseException {
 		RestTemplate restTemplate = new RestTemplate();
 		String fooResourceUrl = "http://www.omdbapi.com/?t=" + name
 				+ "&apikey=c83996a9&fbclid=IwAR2ociOGRH-djAzQbinOzdpv4kuYalT-RpMnLJRYS1aK2TqOyI_Mi_hHC1M";
@@ -84,17 +84,18 @@ public class MovieController {
 			writersSet.add(write);
 		}
 
-		Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre,
-				writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster,
-				movieBean.imdbRating, movieBean.Production);
-
 		// API returns different title from the one given, which implies another
 		// database check.
-		ArrayList<Movie> foundMovie = (ArrayList<Movie>) movieService.findByTitle(movie.getTitle());
+		ArrayList<Movie> foundMovie = (ArrayList<Movie>) movieService.findByTitle(title);
 		if (foundMovie == null || foundMovie.isEmpty()) {
-			return movieService.save(movie);
+			Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre,
+					writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster,
+					movieBean.imdbRating, movieBean.Production);
+			ArrayList<Movie> newMovie = new ArrayList<Movie>();
+			newMovie.add(movieService.save(movie));
+			return newMovie;
 		}
-		return movie;
+		return foundMovie;
 
 	}
 
@@ -109,13 +110,15 @@ public class MovieController {
 		ArrayList<MovieBean> foundMovieBeans = new ArrayList<>();
 		if (foundMovies == null || foundMovies.isEmpty()) {
 			// Search API.
-			Movie apiMovie = this.getFromAPI(title);
+			ArrayList<Movie> apiMovie = this.getFromAPI(title);
 
 			if (apiMovie == null) {
 				return null;
 			}
+			for (Movie movie : apiMovie) {
+				foundMovieBeans.add(new MovieBean(movie));
 
-			foundMovieBeans.add(new MovieBean(apiMovie));
+			}
 		}
 
 		return foundMovieBeans;
@@ -126,11 +129,11 @@ public class MovieController {
 	public void call() throws ParseException {
 		getFromAPI("Lord of the rings");
 	}
-	
+
 	@CrossOrigin
-	@RequestMapping(path="/api/movie/{id}", method=RequestMethod.GET)
-	//Returns Movie bean with given ID
-	public @ResponseBody MovieBean getMovie(@PathVariable("id") Long id){
+	@RequestMapping(path = "/api/movie/{id}", method = RequestMethod.GET)
+	// Returns Movie bean with given ID
+	public @ResponseBody MovieBean getMovie(@PathVariable("id") Long id) {
 		Movie movie = movieService.findOne(id);
 		MovieBean mb = new MovieBean(movie);
 		return mb;
