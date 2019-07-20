@@ -28,6 +28,7 @@ public class JwtAuthenticationController {
 	@Autowired
 	private LoggingBean userDetailsService;
 
+	@CrossOrigin()
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody LoggingBean authenticationRequest)
 			throws Exception {
@@ -38,8 +39,6 @@ public class JwtAuthenticationController {
 	}
 
 	private void authenticate(String username, String password) throws Exception {
-		System.out.println(username);
-		System.out.println(password);
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
