@@ -3,9 +3,14 @@ package com.NextWatch.controllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.websocket.server.PathParam;
 
@@ -28,8 +33,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.NextWatch.beans.MovieBean;
 import com.NextWatch.models.Movie;
+import com.NextWatch.models.User;
 import com.NextWatch.service.MovieService;
 
+import static java.util.stream.Collectors.*;
 @RestController
 public class MovieController {
 
@@ -72,8 +79,7 @@ public class MovieController {
 		Date released = null;
 		try {
 			released = sdf.parse(movieBean.Released);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		String[] runtimeArray = movieBean.Runtime.split(" ");
 		int runtime = Integer.parseInt(runtimeArray[0]);
@@ -88,7 +94,7 @@ public class MovieController {
 		// database check.
 		ArrayList<Movie> foundMovie = (ArrayList<Movie>) movieService.findByTitle(title);
 		if (foundMovie == null || foundMovie.isEmpty()) {
-			Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Genre,
+			Movie movie = new Movie(null, title, movieBean.Year, rated, released, runtime, genreSet, movieBean.Director,
 					writersSet, actorsSet, movieBean.Plot, movieBean.Language, movieBean.Country, movieBean.Poster,
 					movieBean.imdbRating, movieBean.Production);
 			ArrayList<Movie> newMovie = new ArrayList<Movie>();
@@ -138,27 +144,126 @@ public class MovieController {
 		MovieBean mb = new MovieBean(movie);
 		return mb;
 	}
-	
+
 	@CrossOrigin
-	@RequestMapping(path="/api/getNewest", method=RequestMethod.GET)
-	public @ResponseBody ArrayList<MovieBean> getNewest(){
-		ArrayList<Movie> movies =(ArrayList<Movie>) movieService.findTop20ByOrderByReleasedDesc();
+	@RequestMapping(path = "/api/getNewest", method = RequestMethod.GET)
+	public @ResponseBody ArrayList<MovieBean> getNewest() {
+		ArrayList<Movie> movies = (ArrayList<Movie>) movieService.findTop20ByOrderByReleasedDesc();
 		ArrayList<MovieBean> mbeans = new ArrayList<>();
 		for (Movie movie : movies) {
 			mbeans.add(new MovieBean(movie));
 		}
 		return mbeans;
 	}
-	
+
 	@CrossOrigin
-	@RequestMapping(path="/api/getPopular", method=RequestMethod.GET)
-	public @ResponseBody ArrayList<MovieBean> getPopular(){
-		ArrayList<Movie> movies =(ArrayList<Movie>) movieService.findTop20ByOrderBynumberLikesDesc();
+	@RequestMapping(path = "/api/getPopular", method = RequestMethod.GET)
+	public @ResponseBody ArrayList<MovieBean> getPopular() {
+		ArrayList<Movie> movies = (ArrayList<Movie>) movieService.findTop20ByOrderBynumberLikesDesc();
 		ArrayList<MovieBean> mbeans = new ArrayList<>();
 		for (Movie movie : movies) {
 			mbeans.add(new MovieBean(movie));
 		}
 		return mbeans;
+	}
+
+	@CrossOrigin
+	@RequestMapping(path = "/api/getSimilar/{id}")
+	public @ResponseBody ArrayList<MovieBean> getSimilar(@PathVariable("id") Long id) {
+		Movie movie = movieService.findOne(id);
+		if (movie == null) {
+			return null;
+		}
+
+		HashMap<Movie, Double> movieMap = new HashMap<>();
+
+		ArrayList<Movie> allMovies = (ArrayList<Movie>) movieService.findAll();
+		// Iterate through all movies, add them to dictionary.
+		for (Movie otherMovie : allMovies) {
+			movieMap.put(otherMovie, 0.0);
+			// Skip same movie.
+			if (otherMovie.getId().equals(movie.getId())) {
+				continue;
+			}
+			// Check for movies with same genre, add 1 point to dictionary for every
+			// matching genre.
+			for (String genre : movie.getGenre()) {
+				for (String otherGenre : otherMovie.getGenre()) {
+					if (genre.equals(otherGenre)) {
+						movieMap.put(otherMovie, movieMap.get(otherMovie) + 1);
+					}
+				}
+			}
+			// Check for movies with same actors, add 1 point to dictionary for every
+			// matching actor.
+			for (String actor : movie.getActors()) {
+				for (String otherActor : otherMovie.getActors()) {
+					if (actor.equals(otherActor)) {
+						movieMap.put(otherMovie, movieMap.get(otherMovie) + 1);
+					}
+				}
+			}
+			// Check for movies with same director, add 1 point to dictionary for every
+			// matching director.
+			String[] directors = movie.getDirector().split(", ");
+			for (String director : directors) {
+				if (otherMovie.getDirector().contains(director)) {
+					movieMap.put(otherMovie, movieMap.get(otherMovie) + 1);
+				}
+			}
+			// Check for movie with same rated category, add 1 point to dictionary for
+			// matching category.
+			if (movie.getRated().equals(otherMovie.getRated())) {
+				movieMap.put(otherMovie, movieMap.get(otherMovie) + 1);
+			}
+			// Check for movie with same production, add 1 point to dictionary for matching
+			// production.
+			if (movie.getProduction().equals(otherMovie.getProduction())) {
+				movieMap.put(otherMovie, movieMap.get(otherMovie) + 1);
+			}
+			for (User userWhoLikedMovie : movie.getUsersWhoLiked()) {
+				for (Movie userOtherMovies : userWhoLikedMovie.getLikedMovies()) {
+					if (movie.getId().equals(userOtherMovies)) {
+						continue;
+					}
+					movieMap.put(otherMovie, movieMap.get(otherMovie) + 1);
+				}
+			}
+			movieMap.put(otherMovie, movieMap.get(otherMovie) + otherMovie.getImdbRating());
+		}
+
+		ArrayList<MovieBean> simillarMovies = new ArrayList<>();
+		
+		ArrayList<Movie> movies = new ArrayList<>(movieMap.keySet());
+		ArrayList<Double> values = new ArrayList<>(movieMap.values());
+		
+		for(int i = 0; i<movies.size();i++) {
+			for(int j=i+1;j<movies.size();j++) {
+				if(values.get(j)>values.get(i)) {
+					Movie m = movies.get(i);
+					movies.set(i, movies.get(j));
+					movies.set(j, m);
+					
+					Double v = values.get(i);
+					values.set(i, values.get(j));
+					values.set(j,v);
+				}
+			}
+		}
+
+		/*for (Map.Entry<Movie, Double> entry : movieMap.entrySet()) {
+			System.out.println(entry.getKey().getTitle() + "  " + entry.getValue());
+		}*/
+		ArrayList<MovieBean> mbArray = new ArrayList<>();
+		for (Movie m : movies) {
+			mbArray.add(new MovieBean(m));
+		}
+		for (Double m : values) {
+			System.out.println(m);
+		}
+
+
+		return  mbArray;
 	}
 
 }
