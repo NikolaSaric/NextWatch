@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-@Entity(name="movie")
+@Entity(name = "movie")
 public class Movie {
 	@Id
 	@GeneratedValue
@@ -27,18 +27,18 @@ public class Movie {
 	private Date released;
 	@Column(name = "runtime")
 	private int runtime; // in minutes
-	
+
 	@ElementCollection
 	@Column(name = "genre")
 	private Set<String> genre;
-	
+
 	@Column(name = "director")
 	private String director; // set in case there are more directors
-	
+
 	@ElementCollection
 	@Column(name = "writers")
 	private Set<String> writers;
-	
+
 	@ElementCollection
 	@Column(name = "actors")
 	private Set<String> actors;
@@ -58,18 +58,21 @@ public class Movie {
 	private int numberLikes;
 	@Column(name = "NumberOfDislikes")
 	private int numberDislikes;
-	@ManyToMany(mappedBy="likedMovies")
+	@ManyToMany(mappedBy = "likedMovies")
 	private Set<User> usersWhoLiked;
-	
-	@ManyToMany(mappedBy="dislikedMovies")
+
+	@ManyToMany(mappedBy = "dislikedMovies")
 	private Set<User> usersWhoDisliked;
+
+	@OneToMany
+	private Set<SimilarMovie> similarMovies;
+
+	@Column(name = "lastUpdatedSimilar")
+	private Date lastUpdatedSimilar;
 
 	public Movie() {
 		super();
 	}
-
-	
-	
 
 	public Movie(Long id, String title, int year, String rated, Date released, int runtime, Set<String> genre,
 			String director, Set<String> writers, Set<String> actors, String plot, String language, String country,
@@ -92,9 +95,6 @@ public class Movie {
 		this.imdbRating = imdbRating;
 		this.production = production;
 	}
-
-
-
 
 	public Long getId() {
 		return id;
@@ -224,75 +224,60 @@ public class Movie {
 		this.production = production;
 	}
 
-
-
-
 	public String getDirector() {
 		return director;
 	}
-
-
-
 
 	public void setDirector(String director) {
 		this.director = director;
 	}
 
-
-
-
 	public int getNumberLikes() {
 		return numberLikes;
 	}
-
-
-
 
 	public void setNumberLikes(int numberLikes) {
 		this.numberLikes = numberLikes;
 	}
 
-
-
-
 	public int getNumberDislikes() {
 		return numberDislikes;
 	}
-
-
-
 
 	public void setNumberDislikes(int numberDislikes) {
 		this.numberDislikes = numberDislikes;
 	}
 
-
-
-
 	public Set<User> getUsersWhoLiked() {
 		return usersWhoLiked;
 	}
-
-
-
 
 	public void setUsersWhoLiked(Set<User> usersWhoLiked) {
 		this.usersWhoLiked = usersWhoLiked;
 	}
 
-
-
-
 	public Set<User> getUsersWhoDisliked() {
 		return usersWhoDisliked;
 	}
 
-
-
-
 	public void setUsersWhoDisliked(Set<User> usersWhoDisliked) {
 		this.usersWhoDisliked = usersWhoDisliked;
 	}
-	
+
+	public Set<SimilarMovie> getSimilarMovies() {
+		return similarMovies;
+	}
+
+	public void setSimilarMovies(Set<SimilarMovie> similarMovies) {
+		this.similarMovies = similarMovies;
+	}
+
+	public Date getLastUpdatedSimilar() {
+		return lastUpdatedSimilar;
+	}
+
+	public void setLastUpdatedSimilar(Date lastUpdatedSimilar) {
+		this.lastUpdatedSimilar = lastUpdatedSimilar;
+	}
 
 }
