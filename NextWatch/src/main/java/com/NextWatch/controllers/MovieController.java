@@ -33,8 +33,10 @@ import org.springframework.web.client.RestTemplate;
 
 import com.NextWatch.beans.MovieBean;
 import com.NextWatch.models.Movie;
+import com.NextWatch.models.SimilarMovie;
 import com.NextWatch.models.User;
 import com.NextWatch.service.MovieService;
+import com.NextWatch.service.SimilarMoviesService;
 
 import static java.util.stream.Collectors.*;
 @RestController
@@ -42,6 +44,9 @@ public class MovieController {
 
 	@Autowired
 	MovieService movieService;
+	
+	@Autowired
+	SimilarMoviesService similarService;
 
 	// If no movie was found in database, check API.
 	// Function receives name of the movie and calls API to get movie info
@@ -174,6 +179,42 @@ public class MovieController {
 		if (movie == null) {
 			return null;
 		}
+		
+		//If last update of similar movies was less then 3 days ago - don't calculate again
+		if(movie.getLastUpdatedSimilar()!=null) {
+			Date dateNow = new Date();
+			if(movie.getLastUpdatedSimilar().getTime()+1000*3600*24*3>dateNow.getTime()) {
+				ArrayList<MovieBean> mbArray = new ArrayList<>();
+				//Sorts movies from database
+				ArrayList<SimilarMovie> similarMovies = new ArrayList<>();
+				similarMovies.addAll(movie.getSimilarMovies());
+				for(int i =0;i<similarMovies.size();i++) {
+					for(int j=i+1;j<similarMovies.size();j++) {
+						if(similarMovies.get(i).getScore()<similarMovies.get(j).getScore()) {
+							SimilarMovie similar = similarMovies.get(i);
+							similarMovies.set(i, similarMovies.get(j));
+							similarMovies.set(j, similar);
+						}
+					}
+				}
+				
+				int i = 0;
+
+				
+				for (SimilarMovie m : similarMovies) {
+					System.out.println(m.getScore() + m.getMovie().getTitle());
+				
+					mbArray.add(new MovieBean(m.getMovie()));
+					//Vraca samo 20 najslicnijih filmova
+					if(i++>=20) {
+						break;
+					}
+				}
+				
+				
+				return mbArray;
+			}
+		}
 
 		HashMap<Movie, Double> movieMap = new HashMap<>();
 
@@ -232,7 +273,6 @@ public class MovieController {
 			movieMap.put(otherMovie, movieMap.get(otherMovie) + otherMovie.getImdbRating());
 		}
 
-		ArrayList<MovieBean> simillarMovies = new ArrayList<>();
 		
 		ArrayList<Movie> movies = new ArrayList<>(movieMap.keySet());
 		ArrayList<Double> values = new ArrayList<>(movieMap.values());
@@ -255,12 +295,31 @@ public class MovieController {
 			System.out.println(entry.getKey().getTitle() + "  " + entry.getValue());
 		}*/
 		ArrayList<MovieBean> mbArray = new ArrayList<>();
+		HashSet<SimilarMovie> similarMovies= new HashSet<>(); // Save only 20 movies;
+		int i = 0;
 		for (Movie m : movies) {
 			mbArray.add(new MovieBean(m));
+			similarMovies.add(new SimilarMovie(m, values.get(i)));
+			if(i++>=20) {
+				break;
+			}
 		}
+		similarService.saveAll(similarMovies);
 		for (Double m : values) {
 			System.out.println(m);
 		}
+		
+		
+		
+		//Saves calculated movies
+		movie.setSimilarMovies(similarMovies);
+		
+		
+		
+		movie.setLastUpdatedSimilar(new Date());
+		
+		
+		movieService.save(movie);
 
 
 		return  mbArray;
