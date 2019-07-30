@@ -116,11 +116,13 @@ public class UserController {
 			System.out.println(loggedUser.getId());
 			userService.save(loggedUser);
 
-			/*
-			 * // Removes movie if it was disliked if
-			 * (foundMovie.getUsersWhoDisliked().contains(loggedUser)) {
-			 * foundMovie.getUsersWhoDisliked().remove(loggedUser); }
-			 */
+			// Removes movie if it was disliked if
+			for (User usersWhoDisliked : foundMovie.getUsersWhoDisliked()) {
+				if (loggedUser.getId().equals(usersWhoDisliked.getId())) {
+					foundMovie.getUsersWhoDisliked().remove(usersWhoDisliked);
+				}
+			}
+
 			System.out.println("Still working!");
 			foundMovie.getUsersWhoLiked().add(loggedUser);
 			System.out.println(loggedUser.getId());
@@ -134,8 +136,8 @@ public class UserController {
 
 	// Removes movie from liked.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieUnliked", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieUnliked(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieUnliked/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody boolean movieUnliked(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
@@ -146,11 +148,9 @@ public class UserController {
 
 			String username = authentication.getName();
 			User loggedUser = userService.findByUsername(username);
-
 			loggedUser.getLikedMovies().remove(foundMovie);
 
 			userService.save(loggedUser);
-
 			foundMovie.getUsersWhoLiked().remove(loggedUser);
 			movieService.save(foundMovie);
 
@@ -161,8 +161,8 @@ public class UserController {
 
 	// Adds movie to disliked movies.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieDisliked", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieDisliked(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieDisliked/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean movieDisliked(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
@@ -176,6 +176,7 @@ public class UserController {
 
 			loggedUser.getDislikedMovies().add(foundMovie);
 			loggedUser.getWatchedMovies().add(foundMovie);
+			loggedUser.getLikedMovies().remove(foundMovie);
 
 			userService.save(loggedUser);
 
@@ -189,8 +190,8 @@ public class UserController {
 
 	// Removes movie from disliked.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieUndisliked", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieUndisliked(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieUndisliked/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean movieUndisliked(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
@@ -201,8 +202,9 @@ public class UserController {
 
 			String username = authentication.getName();
 			User loggedUser = userService.findByUsername(username);
-
+			System.out.println(loggedUser.getDislikedMovies().size());
 			loggedUser.getDislikedMovies().remove(foundMovie);
+			System.out.println(loggedUser.getDislikedMovies().size());
 
 			userService.save(loggedUser);
 
@@ -216,8 +218,8 @@ public class UserController {
 
 	// Adds movie to watched.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieWatched", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieWatched(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieWatched/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean movieWatched(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
@@ -244,8 +246,8 @@ public class UserController {
 
 	// Removes movie from watched.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieUnwatched", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieUnwatched(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieUnwatched/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean movieUnwatched(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
@@ -268,8 +270,8 @@ public class UserController {
 
 	// Adds movie to watch later.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieWatchLater", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieWatchLater(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieWatchLater/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean movieWatchLater(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
@@ -292,8 +294,8 @@ public class UserController {
 
 	// Removes movie from watch later.
 	@CrossOrigin()
-	@RequestMapping(value = "/api/movieUnwatchLater", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public boolean movieUnwatchLater(@RequestBody Long id) {
+	@RequestMapping(value = "/api/movieUnwatchLater/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean movieUnwatchLater(@PathVariable("id") Long id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			Movie foundMovie = movieService.findOne(id);
