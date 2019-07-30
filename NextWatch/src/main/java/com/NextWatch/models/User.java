@@ -26,13 +26,13 @@ public class User {
 	@Column(name = "email")
 	private String email;
 
-	@ManyToMany
+	@OneToMany
 	private Set<Movie> likedMovies;
-	@ManyToMany
+	@OneToMany
 	private Set<Movie> dislikedMovies;
-	@ManyToMany
+	@OneToMany
 	private Set<Movie> watchedMovies;
-	@ManyToMany
+	@OneToMany
 	private Set<Movie> watchLaterMovies;
 
 	public User() {

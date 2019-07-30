@@ -58,10 +58,10 @@ public class Movie {
 	private int numberLikes;
 	@Column(name = "NumberOfDislikes")
 	private int numberDislikes;
-	@ManyToMany(mappedBy = "likedMovies")
+	@OneToMany()
 	private Set<User> usersWhoLiked;
 
-	@ManyToMany(mappedBy = "dislikedMovies")
+	@OneToMany()
 	private Set<User> usersWhoDisliked;
 
 	@OneToMany

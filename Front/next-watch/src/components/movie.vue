@@ -30,10 +30,14 @@
       </v-layout>
       <v-layout justify-center row v-if="li">
         <v-flex mt-3>
-          <v-btn large color="success" id="likeBtn" @click="likedClick()">Like</v-btn>
-          <v-btn large color="error" id="dislikeBtn" @click="dislikedClick()">Dislike</v-btn>
-          <v-btn large color="warning" id="watchBtn" @click="watchedClick()">Watched</v-btn>
-          <v-btn large color="primary" id="watchLaterBtn" @click="watchLaterClick()">Watch Later</v-btn>
+          <v-btn large color="success" id="likedBtn" v-if="user.liked" @click="likedClick()">Unlike</v-btn>
+          <v-btn large color="success" id="likeBtn" v-else @click="likedClick()">Like</v-btn>
+          <v-btn large color="error" id="dislikedBtn" v-if="user.disliked" @click="dislikedClick()">Undislike</v-btn>
+          <v-btn large color="error" id="dislikeBtn" v-else @click="dislikedClick()">Dislike</v-btn>
+          <v-btn large color="warning" id="watchedBtn" :disabled="user.liked || user.disliked" v-if="user.watched" @click="watchedClick()">Unwatch</v-btn>
+          <v-btn large color="warning" id="watchBtn" :disabled="user.liked || user.disliked" v-else @click="watchedClick()">Watch</v-btn>
+          <v-btn large color="primary" id="watchedLaterBtn" v-if="user.watchLater" @click="watchLaterClick()">Don't Watch</v-btn>
+          <v-btn large color="primary" id="watchLaterBtn" v-else @click="watchLaterClick()">Watch Later</v-btn>
         </v-flex>
       </v-layout>
 
@@ -145,26 +149,6 @@
                     .then(response => {
                         this.user = response.data;
                     });
-                if (this.user.liked === true) {
-                    document.getElementById("likeBtn").textContent = "Liked";
-                    document.getElementById('dislikeBtn').disabled = true;
-                    document.getElementById('watchBtn').disabled = true;
-                    document.getElementById('watchLaterBtn').disabled = true;
-                } else if (this.user.disliked === true) {
-                    document.getElementById('dislikeBtn').textContent = "Disliked";
-                    document.getElementById('likeBtn').disabled = true;
-                    document.getElementById('watchBtn').disabled = true;
-                    document.getElementById('watchLaterBtn').disabled = true;
-                } else if (this.user.watched === true) {
-                    document.getElementById('watchBtn').textContent = "Watched";
-                    document.getElementById('watchLaterBtn').disabled = true;
-                } else if (this.user.watchLater === true) {
-                    document.getElementById('watchLaterBtn').textContent = "To be watched";
-                    document.getElementById('watchBtn').disabled = true;
-                } else {
-                    document.getElementById('dislikeBtn').textContent = "Disliked";
-                    document.getElementById('likeBtn').disabled = true;
-                }
             }
 
         },
@@ -174,24 +158,13 @@
                     return localStorage.getItem('jwt');
                 };
                 this.axios.defaults.headers.common['Authorization'] = "Bearer " + getJwtToken();
-                if (document.getElementById("likeBtn").textContent === "Like") {
-                    this.axios.post("http://localhost:8080/api/movieLiked/" + this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById("likeBtn").textContent = "Liked";
-                                document.getElementById('dislikeBtn').disabled = true;
-                                document.getElementById('watchBtn').disabled = true;
-                            }
-                        });
-                } else if (document.getElementById("likeBtn").textContent === "Liked") {
-                    this.axios.post("http://localhost:8080/api/movieUnliked/" + this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById("likeBtn").textContent = "Like";
-                                document.getElementById('dislikeBtn').disabled = false;
-                                document.getElementById('watchBtn').disabled = false;
-                            }
-                        });
+                if (!this.user.liked) {
+                    this.user.liked=true;
+                    this.user.disliked=false;
+                    this.axios.post("http://localhost:8080/api/movieLiked/" + this.id);
+                } else if (this.user.liked) {
+                    this.user.liked=false;
+                    this.axios.post("http://localhost:8080/api/movieUnliked/" + this.id);
                 }
             },
             dislikedClick: function () {
@@ -199,24 +172,13 @@
                     return localStorage.getItem('jwt');
                 };
                 this.axios.defaults.headers.common['Authorization'] = "Bearer " + getJwtToken();
-                if (document.getElementById("dislikeBtn").textContent === "Dislike") {
-                    this.axios.post("http://localhost:8080/api/movieDisliked", this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById('dislikeBtn').textContent = "Disliked";
-                                document.getElementById('likeBtn').disabled = true;
-                                document.getElementById('watchBtn').disabled = true;
-                            }
-                        });
-                } else if (document.getElementById("dislikeBtn").textContent === "Disliked") {
-                    this.axios.post("http://localhost:8080/api/movieDisliked", this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById('dislikeBtn').textContent = "Dislike";
-                                document.getElementById('likeBtn').disabled = false;
-                                document.getElementById('watchBtn').disabled = false;
-                            }
-                        });
+                if (!this.user.disliked) {
+                    this.user.disliked=true;
+                    this.user.liked=false;
+                    this.axios.post("http://localhost:8080/api/movieDisliked/"+ this.id);
+                } else if (this.user.disliked) {
+                    this.user.disliked=false;
+                    this.axios.post("http://localhost:8080/api/movieUndisliked/"+ this.id);
                 }
             },
             watchedClick: function () {
@@ -224,24 +186,12 @@
                     return localStorage.getItem('jwt');
                 };
                 this.axios.defaults.headers.common['Authorization'] = "Bearer " + getJwtToken();
-                if (document.getElementById("watchBtn").textContent === "Watched") {
-                    this.axios.post("http://localhost:8080/api/movieWatched", this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById("watchBtn").textContent = "Unwatch";
-                                document.getElementById('watchLaterBtn').disabled = true;
-                            }
-                        });
-                } else if (document.getElementById("watchBtn").textContent === "Unwatch") {
-                    this.axios.post("http://localhost:8080/api/movieUnwatched", this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById("watchBtn").textContent = "Watched";
-                                document.getElementById('likeBtn').disabled = true;
-                                document.getElementById('dislikeBtn').disabled = true;
-                                document.getElementById('watchBtn').disabled = false;
-                            }
-                        });
+                if (!this.user.watched) {
+                    this.user.watched = true;
+                    this.axios.post("http://localhost:8080/api/movieWatched/"+ this.id);
+                } else if (this.user.watched) {
+                    this.user.watched=false;
+                    this.axios.post("http://localhost:8080/api/movieUnwatched/"+ this.id);
                 }
             },
             watchLaterClick: function () {
@@ -249,24 +199,12 @@
                     return localStorage.getItem('jwt');
                 };
                 this.axios.defaults.headers.common['Authorization'] = "Bearer " + getJwtToken();
-                if (document.getElementById("watchLaterBtn").textContent === "Watch Later") {
-                    this.axios.post("http://localhost:8080/api/movieWatchLater", this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById("watchLaterBtn").textContent = "Don't Watch";
-                                document.getElementById('likeBtn').disabled = true;
-                                document.getElementById('dislikeBtn').disabled = true;
-                                document.getElementById('watchBtn').disabled = true;
-                            }
-                        });
-                } else if (document.getElementById("watchLaterBtn").textContent === "Don't Watch") {
-                    this.axios.post("http://localhost:8080/api/movieUnwatchLater", this.id)
-                        .then(response => {
-                            if (response.data === true) {
-                                document.getElementById("watchLaterBtn").textContent = "Watch Later";
-                                document.getElementById('watchBtn').disabled = false;
-                            }
-                        });
+                if (!this.user.watchLater) {
+                    this.user.watchLater=true;
+                    this.axios.post("http://localhost:8080/api/movieWatchLater/"+ this.id);
+                } else if (this.user.watchLater) {
+                    this.user.watchLater = false;
+                    this.axios.post("http://localhost:8080/api/movieUnwatchLater/"+ this.id);
                 }
             },
             viewSimilarMovies(id) {
