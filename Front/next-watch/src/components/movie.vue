@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navbar></navbar>
     <v-container>
       <v-layout justify-center row>
         <v-flex xs4 class="moviedesc" ma-2>
@@ -69,8 +70,13 @@
   </div>
 </template>
 <script>
+  import navbar from "./navbar.vue";
+
     export default {
         name: "Movie",
+        components: {
+            navbar
+        },
         data: function () {
             return {
                 id: "",
@@ -319,6 +325,12 @@
                     this.showSimilarMovies();
 
                 });
+            },
+            updated: function () {
+                this.$nextTick(function () {
+                    // Code that will run only after the
+                    // entire view has been re-rendered
+                })
             }
 
         }

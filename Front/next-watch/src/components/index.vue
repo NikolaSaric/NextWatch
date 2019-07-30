@@ -1,5 +1,9 @@
+
+
 <template>
   <div>
+    <navbar></navbar>
+
     <v-container>
       <div v-if="li">
         <v-layout align-start row justify-start class="UpperLowerMargin5">
@@ -60,11 +64,13 @@
 
 <script>
     import moviePreview from "./moviePreview.vue";
+    import navbar from "./navbar.vue";
 
     export default {
         name: 'Index',
         components: {
-            moviePreview
+            moviePreview,
+            navbar
         },
         data() {
             return {
@@ -154,7 +160,7 @@
             }
         },
         mounted() {
-            this.li = localStorage.getItem("jwt") !== "";
+            this.li = this.jwt !== "";
             this.axios.get("http://localhost:8080/api/getNewest").then(response => {
                 this.newest = response.data;
                 for (var i = 0; i < 5; i++) {
