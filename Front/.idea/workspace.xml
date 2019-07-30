@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ef6142e8-3252-42b6-b9d6-633a5893edec" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/next-watch/src/components/navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-watch/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-watch/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-watch/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-watch/src/components/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/components/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-watch/src/components/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/components/login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/next-watch/src/components/movie.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/components/movie.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next-watch/src/components/register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/next-watch/src/components/register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/config/JwtRequestFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/config/JwtRequestFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/jwt/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/jwt/JwtAuthorizationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../NextWatch/src/main/java/com/NextWatch/jwt/SecurityConstants.java" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -19,8 +30,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/next-watch/src/components/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="10" selection-start-column="10" selection-end-column="10" />
+            <state relative-caret-position="196">
+              <caret line="70" column="21" lean-forward="true" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+              <folding>
+                <element signature="e#2106#2152#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/next-watch/src/App.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="336">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/next-watch/src/components/navbar.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -28,17 +60,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/next-watch/src/components/searchResults.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
+            <state relative-caret-position="1008">
+              <caret line="36" column="45" lean-forward="true" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/next-watch/src/components/movie.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5656">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/next-watch/src/components/movie.vue">
+        <entry file="file://$PROJECT_DIR$/next-watch/src/components/login.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="186" column="79" selection-start-line="186" selection-start-column="79" selection-end-line="186" selection-end-column="79" />
+            <state relative-caret-position="255">
+              <caret line="76" column="57" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -46,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/next-watch/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28">
+            <state relative-caret-position="115">
               <caret line="7" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -60,6 +101,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
               <caret line="3" column="100" selection-start-line="3" selection-start-column="64" selection-end-line="3" selection-end-column="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/next-watch/src/components/register.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2716">
+              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -79,15 +129,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/next-watch/src/components/register.vue" />
-        <option value="$PROJECT_DIR$/next-watch/src/components/login.vue" />
-        <option value="$PROJECT_DIR$/next-watch/src/main.js" />
         <option value="$PROJECT_DIR$/next-watch/src/router.js" />
-        <option value="$PROJECT_DIR$/next-watch/src/App.vue" />
         <option value="$PROJECT_DIR$/next-watch/src/components/searchResults.vue" />
-        <option value="$PROJECT_DIR$/next-watch/src/components/index.vue" />
         <option value="$PROJECT_DIR$/next-watch/src/components/moviePreview.vue" />
+        <option value="$PROJECT_DIR$/next-watch/src/App.vue" />
+        <option value="$PROJECT_DIR$/next-watch/src/components/index.vue" />
         <option value="$PROJECT_DIR$/next-watch/src/components/movie.vue" />
+        <option value="$PROJECT_DIR$/next-watch/src/components/register.vue" />
+        <option value="$PROJECT_DIR$/next-watch/src/main.js" />
+        <option value="$PROJECT_DIR$/next-watch/src/components/navbar.vue" />
+        <option value="$PROJECT_DIR$/next-watch/src/components/login.vue" />
       </list>
     </option>
   </component>
@@ -103,6 +154,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -132,7 +184,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -178,22 +229,24 @@
       <workItem from="1563311741449" duration="1566000" />
       <workItem from="1563549084915" duration="1709000" />
       <workItem from="1563913775085" duration="4401000" />
+      <workItem from="1564399235846" duration="1165000" />
+      <workItem from="1564475386384" duration="7141000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33951000" />
+    <option name="totallyTimeSpent" value="42257000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15532055" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13945803" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32941177" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32941177" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -212,13 +265,6 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/next-watch/src/components/HelloWorld.vue" />
-    <entry file="file://$PROJECT_DIR$/next-watch/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/next-watch/src/router.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
@@ -229,41 +275,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/next-watch/src/components/register.vue">
+    <entry file="file://$PROJECT_DIR$/next-watch/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2492">
-          <caret line="89" column="45" lean-forward="true" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
+        <state relative-caret-position="115">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/next-watch/src/components/login.vue">
+    <entry file="file://$PROJECT_DIR$/next-watch/src/App.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="29" column="40" lean-forward="true" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="40" />
+        <state relative-caret-position="336">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/next-watch/src/components/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" selection-start-column="10" selection-end-column="10" />
+        <state relative-caret-position="196">
+          <caret line="70" column="21" lean-forward="true" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+          <folding>
+            <element signature="e#2106#2152#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/next-watch/src/components/register.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2716">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/next-watch/src/components/searchResults.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/next-watch/src/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1008">
+          <caret line="36" column="45" lean-forward="true" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -276,8 +325,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/next-watch/src/components/movie.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="186" column="79" selection-start-line="186" selection-start-column="79" selection-end-line="186" selection-end-column="79" />
+        <state relative-caret-position="-5656">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/next-watch/src/components/navbar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="47" column="16" selection-start-line="47" selection-start-column="16" selection-end-line="47" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/next-watch/src/components/login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="76" column="57" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
         </state>
       </provider>
     </entry>
